@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MercApp - Documentación de Despliegue</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        header { background: #2c3e50; color: #fff; padding: 2rem; text-align: center; border-radius: 8px; margin-bottom: 2rem; }
+        section { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .arch-diagram { background: #eef; padding: 15px; border: 1px dashed #99b; text-align: center; font-weight: bold; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 12px; border: 1px solid #ddd; }
+        th { background-color: #f2f2f2; color: #333; }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; color: #fff; }
+        .get { background: #61affe; }
+        .post { background: #49cc90; }
+        .put { background: #fca130; }
+        .delete { background: #f93e3e; }
+        .links { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+        .btn { padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; transition: background 0.3s; }
+        .btn:hover { background: #2980b9; }
+        code { background: #f0f0f0; padding: 2px 4px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>MercApp - Micrositio Técnico</h1>
+    <p>Sistema de Gestión de Inventario para la Unidad 4 - Aplicaciones Web</p>
+</header>
+
+<section>
+    <h2>🏗️ Arquitectura de Despliegue</h2>
+    <p>El sistema sigue una arquitectura de desacoplamiento total entre el cliente y el servidor (Decoupled Architecture), permitiendo escalabilidad independiente.</p>
+    <div class="arch-diagram">
+        Frontend (Netlify) ➔ API Backend (Railway) ➔ Base de Datos (MongoDB Atlas)
+    </div>
+    <ul>
+        <li><strong>Frontend:</strong> SPA desarrollada en Vue 3, desplegada en Netlify mediante el build de Vite.</li>
+        <li><strong>Backend:</strong> API REST desarrollada en Node.js/Express, desplegada en Railway utilizando Nixpacks.</li>
+        <li><strong>Base de Datos:</strong> MongoDB Atlas (Cluster M0), proporcionando persistencia de datos en la nube con TLS.</li>
+        <li><strong>Seguridad:</strong> Implementación de CORS para restringir el acceso únicamente al dominio de Netlify.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>🚀 Guía de Ejecución Local</h2>
+    <p>Para ejecutar el proyecto localmente, siga estos pasos:</p>
+    <h3>1. Backend</h3>
+    <ol>
+        <li><code>cd backend</code> (o carpeta raíz según estructura)</li>
+        <li><code>npm install</code></li>
+        <li>Configurar <code>.env</code> con <code>MONGODB_URI</code> y <code>PORT=3000</code></li>
+        <li><code>npm run dev</code></li>
+    </ol>
+    <h3>2. Frontend</h3>
+    <ol>
+        <li><code>cd frontend</code></li>
+        <li><code>npm install</code></li>
+        <li>Configurar <code>.env</code> con <code>VITE_API_URL=http://localhost:3000/api</code></li>
+        <li><code>npm run dev</code></li>
+    </ol>
+</section>
+
+<section>
+    <h2>🔗 Enlaces de Producción</h2>
+    <div class="links">
+        <a href="#" class="btn">Frontend (Netlify)</a>
+        <a href="#" class="btn">API Backend (Railway)</a>
+    </div>
+</section>
+
+<section>
+    <h2>📡 Documentación de Endpoints</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Método</th>
+                <th>Ruta</th>
+                <th>Descripción</th>
+                <th>Ejemplo Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="badge get">GET</span></td>
+                <td><code>/api/health</code></td>
+                <td>Verifica el estado del servidor y BD</td>
+                <td><code>{ "status": "up", "db": "connected" }</code></td>
+            </tr>
+            <tr>
+                <td><span class="badge get">GET</span></td>
+                <td><code>/api/products</code></td>
+                <td>Lista todos los productos</td>
+                <td><code>[{ "id": "...", "name": "Producto A" }]</code></td>
+            </tr>
+            <tr>
+                <td><span class="badge post">POST</span></td>
+                <td><code>/api/products</code></td>
+                <td>Crea un nuevo producto</td>
+                <td><code>{ "id": "...", "message": "Creado" }</code></td>
+            </tr>
+            <tr>
+                <td><span class="badge put">PUT</span></td>
+                <td><code>/api/products/:id</code></td>
+                <td>Actualiza un producto existente</td>
+                <td><code>{ "message": "Actualizado" }</code></td>
+            </tr>
+            <tr>
+                <td><span class="badge delete">DELETE</span></td>
+                <td><code>/api/products/:id</code></td>
+                <td>Elimina un producto</td>
+                <td><code>{ "message": "Eliminado" }</code></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <p style="text-align: center; color: #777; margin-top: 2rem;">
+        &copy; 2026 Javier Marca - Universidad Politécnica Salesiana
+    </p>
+</footer>
+
+</body>
+</html>
